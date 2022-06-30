@@ -3,14 +3,12 @@ using OpenTK.Graphics;
 using StorybrewCommon.Mapset;
 using StorybrewCommon.Scripting;
 using StorybrewCommon.Storyboarding;
-using StorybrewCommon.Storyboarding.Util;
 using System;
 
 namespace StorybrewScripts
 {
     class Background : StoryboardObjectGenerator
     {
-        OsbSpritePool pool;
         public override void Generate()
         {
 		    ColorBackground(-50, 312855, 329035);
