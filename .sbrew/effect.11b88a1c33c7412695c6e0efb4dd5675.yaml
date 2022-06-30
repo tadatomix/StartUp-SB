@@ -1,0 +1,19 @@
+﻿FormatVersion: 7
+Name: "Metadata 1"
+Script: "Metadata"
+Config:
+  RandomSeed:
+    Type: "System.Int32"
+    Value: "0"
+    DisplayName: "Random seed"
+Layers:
+  87fce9bf4a6c4c27aef51dc3a35b9a1d:
+    Name: "Bar"
+    OsbLayer: Background
+    DiffSpecific: No
+    Visible: Yes
+  3f76c8f63ea04549b51afb529edf8311:
+    Name: ""
+    OsbLayer: Background
+    DiffSpecific: No
+    Visible: Yes
