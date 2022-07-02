@@ -19,12 +19,12 @@ namespace StorybrewScripts
             var PositionY = 20;
             int FadeTime = 200;
 
-            var font = LoadFont($"sb/f/Thin1", new FontDescription()
+            var font = LoadFont("sb/f/Thin1", new FontDescription()
             {
-                FontPath = $"{ProjectPath}/assetlibrary/MPLUS1p-Thin.ttf",
+                FontPath = $"{ProjectPath}/assetlibrary/NotoSansJP-Thin.otf",
                 FontSize = 50,
                 Color = Color4.White,
-                TrimTransparency = false
+                TrimTransparency = true
             });
 
             foreach (var line in File.ReadAllLines(file)) 
@@ -37,6 +37,7 @@ namespace StorybrewScripts
                     var startTime = int.Parse(part[0]);
                     var endTime = startTime;
                     var text = part[1];
+                    var scale = .35f;
                     var width = 0f;
                     var letterX = 0f;
                     var inDelay = 0;
@@ -50,7 +51,7 @@ namespace StorybrewScripts
                             case ',': endTime += (int)beat / 4 * 3; break;
                             case '-': endTime += (int)beat / 2; break;
                             case '/': endTime += (int)beat / 4; break;
-                            default: width += font.GetTexture(letter.ToString()).BaseWidth * .35f; break;
+                            default: width += font.GetTexture(letter.ToString()).BaseWidth * scale; break;
                         }
                     }
 
@@ -62,21 +63,16 @@ namespace StorybrewScripts
 
                             if (!texture.IsEmpty) 
                             {
-                                var position = new Vector2(320 - width / 2 + letterX, PositionY) + texture.OffsetFor(OsbOrigin.Centre) / 2f;
+                                var position = new Vector2(320 - width / 2 + letterX, PositionY) + texture.OffsetFor(OsbOrigin.Centre) * scale;
 
                                 var s = GetLayer("").CreateSprite(texture.Path, OsbOrigin.Centre, position);
-                                s.Scale(startTime, .35f);
-                                if (startTime + inDelay - FadeTime > startTime + outDelay * 4 + 20) 
-                                {
-                                    s.MoveY(startTime + outDelay, startTime + outDelay + 20, position.Y, position.Y - 6);
-                                    s.Fade(startTime + outDelay, 0);
-                                }
+                                s.Scale(startTime + inDelay - 100, scale);
                                 s.MoveY(OsbEasing.OutQuad, startTime + inDelay - 100, startTime + inDelay + 200, position.Y - 6, position.Y);
                                 s.Fade(startTime + inDelay - FadeTime, startTime + inDelay, 0, 1);
                                 s.MoveY(OsbEasing.OutCubic, endTime, endTime + FadeTime, position.Y, position.Y + 4);
                                 s.Fade(OsbEasing.OutCubic, endTime, endTime + FadeTime, 1, 0);
                             }
-                            letterX += texture.BaseWidth * .35f;
+                            letterX += texture.BaseWidth * scale;
                             outDelay += 6;
                         } 
                         else 

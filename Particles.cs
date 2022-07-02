@@ -14,7 +14,7 @@ namespace StorybrewScripts
         {
 		    Action<int, int> RadialParticles = (startTime, endTime) =>
             {
-                for (int i = startTime; i < endTime; i += 10)
+                for (int i = startTime; i < endTime; i += 15)
                 {
                     var duration = Random(1000, 6000);
                     var angle = Random(0, Math.PI * 2);
@@ -32,13 +32,11 @@ namespace StorybrewScripts
             };
             Action<int, int> RisingParticles = (startTime, endTime) =>
             {
-                for (int i = startTime; i < endTime; i += 20)
+                for (int i = startTime; i < endTime; i += 30)
                 {
                     var duration = Random(800, 5000);
                     var startPos = new Vector2(Random(-107, 747), Random(200, 600));
-                    var endPos = new Vector2(
-                        startPos.X - Random(-20, 20),
-                        Random(-100, 10));
+                    var endPos = new Vector2(startPos.X - Random(-20, 20), Random(-100, 10));
 
                     var sprite = pool.Get(i, i + duration);
                     sprite.Fade(i, i + 500, 0, 1);

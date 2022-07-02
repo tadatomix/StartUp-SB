@@ -12,6 +12,7 @@ namespace StorybrewScripts
         public override void Generate()
         {
 		    ColorBackground(-50, 312855, 329035);
+
             FloatingGirl(10833, 43193, 2500, 2500);
             BlurGirl(43193, 91732);
             FloatingGirl(102518, 111957, 8000, 1000);
@@ -28,6 +29,7 @@ namespace StorybrewScripts
             flash.Additive(102518);
             flash.Color(102518, Color4.White);
 
+            var hColor = Color4.White;
             Action<double, double, double, bool> Flashes = (startTime, endTime, fade, color) =>
             {
                 flash.Fade(startTime, endTime, fade, 0);
@@ -36,15 +38,17 @@ namespace StorybrewScripts
                 {
                     foreach (var hitobject in Beatmap.HitObjects)
                     {
-                        if (hitobject.StartTime >= startTime - 1 && hitobject.StartTime <= startTime + 1)
+                        if (hitobject.StartTime >= startTime - 1 && hitobject.StartTime <= startTime + 1 && hColor != hitobject.Color)
                         {
                             flash.Color(startTime, hitobject.Color);
+                            hColor = hitobject.Color;
                         }
                     }
                 }
                 else
                 {
-                    flash.Color(startTime, Color4.White);
+                    if (hColor != Color4.White) flash.Color(startTime, Color4.White);
+                    hColor = Color4.White;
                 }
             };
 
@@ -66,10 +70,14 @@ namespace StorybrewScripts
             }
 
             Flashes(113305, 114653, 0.8, false);
+            Flashes(123417, 123754, 0.6, true);
+            Flashes(123754, 124091, 0.7, true);
             Flashes(124091, 125440, 0.8, true);
-            Flashes(134204, 134288, 0.8, true);
-            Flashes(134541, 134625, 0.8, true);
+            Flashes(134204, 134288, 0.7, true);
+            Flashes(134541, 134625, 0.7, true);
             Flashes(134878, 136226, 0.8, false);
+            Flashes(144990, 145327, 0.6, true);
+            Flashes(145327, 145664, 0.7, true);
             Flashes(145664, 147013, 0.8, true);
             Flashes(155103, 155777, 0.8, false);
             Flashes(156451, 161844, 0.8, true);
@@ -119,7 +127,10 @@ namespace StorybrewScripts
 
             Flashes(231957, 236002, 0.8, false);
             Flashes(237350, 238698, 0.8, false);
+            Flashes(247462, 247799, 0.6, true);
+            Flashes(247799, 248136, 0.7, true);
             Flashes(248136, 249485, 0.8, true);
+            Flashes(257575, 258923, 0.7, true);
             Flashes(258923, 260271, 0.8, false);
             Flashes(268361, 269035, 0.6, true);
             Flashes(269035, 269709, 0.7, true);
@@ -139,24 +150,25 @@ namespace StorybrewScripts
 
             #endregion
 
+            var leftLight = GetLayer("Sides").CreateSprite("sb/side.png", OsbOrigin.CentreLeft, new Vector2(-107, 240));
+            var rightLight = GetLayer("Sides").CreateSprite("sb/side.png", OsbOrigin.CentreRight, new Vector2(747, 240));
+
+            leftLight.ScaleVec(113305, 14, 8);
+            leftLight.Color(113305, Color4.Cyan);
+            leftLight.Additive(113305);
+
+            rightLight.ScaleVec(113305 + beat, 14, 8);
+            rightLight.Color(113305 + beat, Color4.SeaGreen);
+            rightLight.Additive(113305 + beat);
+            rightLight.FlipH(113305 + beat);
+
             Action<int, int, double> SideFlashes = (startTime, endTime, opacity) =>
             {
-                var leftLight = GetLayer("Sides").CreateSprite("sb/side.png", OsbOrigin.CentreLeft, new Vector2(-107, 240));
-                var rightLight = GetLayer("Sides").CreateSprite("sb/side.png", OsbOrigin.CentreRight, new Vector2(747, 240));
                 var duration = endTime - startTime;
-
-                leftLight.ScaleVec(startTime, 14, 8);
-                leftLight.Color(startTime, Color4.Cyan);
-                leftLight.Additive(startTime);
 
                 leftLight.StartLoopGroup(startTime, (int)(duration / beat / 2));
                 leftLight.Fade(OsbEasing.Out, 0, beat * 2, opacity, 0);
                 leftLight.EndGroup();
-
-                rightLight.ScaleVec(startTime + beat, 14, 8);
-                rightLight.Color(startTime + beat, Color4.SeaGreen);
-                rightLight.Additive(startTime + beat);
-                rightLight.FlipH(startTime + beat);
 
                 rightLight.StartLoopGroup(startTime + beat, (int)((duration - beat) / beat / 2));
                 rightLight.Fade(OsbEasing.Out, 0, beat * 2, opacity, 0);

@@ -29,7 +29,7 @@ namespace StorybrewScripts
             scaleBar.Color(startTime, new Color4(1, 176, 193, 1));
             scaleBar.Color(312855, endTime, new Color4(1, 176, 193, 1), Color4.Black);
 
-            Action <int, int> ProgressBar = (sTime, eTime) =>
+            Action<int, int> ProgressBar = (sTime, eTime) =>
             {
                 scaleBar.Fade(OsbEasing.OutExpo, sTime, sTime + 500, 0, 1);
                 scaleBar.ScaleVec(sTime, eTime, 30, 180, 30, 0);
@@ -46,8 +46,8 @@ namespace StorybrewScripts
             ProgressBar(258923, 302069);
             ProgressBar(302069, endTime);
 
-            GenerateText(startTime, endTime, new Vector2(-26, 370), 0.6f, "Heavy", "PSYQUI ft. Such");
-            GenerateText(startTime, endTime, new Vector2(166, 410), 0.4f, "Thin", "Start Up");
+            GenerateText(startTime, endTime, new Vector2(-28, 367), 0.6f, "Heavy", "PSYQUI ft. Such");
+            GenerateText(startTime, endTime, new Vector2(166, 415), 0.4f, "Thin", "Start Up");
 
             Spectrum(startTime, endTime);
         }
@@ -84,7 +84,7 @@ namespace StorybrewScripts
             for (var i = 0; i < BarCount; i++)
             {
                 var keyframes = heightKeyframes[i];
-                keyframes.Simplify1dKeyframes(1, h => h);
+                keyframes.Simplify1dKeyframes(1.5, h => h);
 
                 var bar = GetLayer("").CreateSprite("sb/bar.png", OsbOrigin.BottomCentre, new Vector2(Position.X + i * barWidth, Position.Y));
                 bar.Fade(StartTime, StartTime + 1000, 0, 1);
@@ -108,16 +108,18 @@ namespace StorybrewScripts
             {
                 FontPath = $"assetlibrary/Uni Sans {fontName}.otf",
                 FontSize = 50,
-                Color = Color4.White
+                Color = Color4.White,
+                TrimTransparency = true
             });
 
             var offsetX = 0f;
             var delay = 0;
+            var width = 0f;
 
             foreach (var letter in text)
             {
                 var texture = font.GetTexture(letter.ToString());
-                var letterPos = new Vector2(Position.X + offsetX, Position.Y) + texture.OffsetFor(OsbOrigin.Centre) / 2f;
+                var letterPos = new Vector2(Position.X + offsetX, Position.Y) + texture.OffsetFor(OsbOrigin.Centre) * scale;
                 
                 if (!texture.IsEmpty)
                 {
@@ -125,9 +127,11 @@ namespace StorybrewScripts
                     sprite.Move(OsbEasing.OutElasticHalf, startTime, startTime + 1000, new Vector2(Position.X - 10, letterPos.Y), letterPos);
                     sprite.Fade(startTime + delay, startTime + delay + 1000, 0, 1);
                     sprite.Fade(endTime - 1000, endTime, 1, 0);
-                    sprite.Scale(startTime, scale);
+                    sprite.Scale(startTime + delay, scale);
                 }
                 offsetX += texture.BaseWidth * scale;
+                width += texture.BaseWidth * scale;
+
                 delay += 20;
             }
         }
