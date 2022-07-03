@@ -19,9 +19,17 @@ namespace StorybrewScripts
             var PositionY = 20;
             int FadeTime = 200;
 
-            var font = LoadFont("sb/f/Thin1", new FontDescription()
+            var japFont = LoadFont("sb/f/jap", new FontDescription()
             {
                 FontPath = $"{ProjectPath}/assetlibrary/NotoSansJP-Thin.otf",
+                FontSize = 50,
+                Color = Color4.White,
+                TrimTransparency = true
+            });
+
+            var font = LoadFont("sb/f", new FontDescription()
+            {
+                FontPath = $"{ProjectPath}/assetlibrary/Nova.otf",
                 FontSize = 50,
                 Color = Color4.White,
                 TrimTransparency = true
@@ -30,13 +38,14 @@ namespace StorybrewScripts
             foreach (var line in File.ReadAllLines(file)) 
             {
                 int o;
-                var part = line.Split(new[]{' '}, 2);
+                var part = line.Split(new[]{' '}, 3);
 
                 if (!String.IsNullOrEmpty(part[0]) && int.TryParse(part[0], out o))
                 {
                     var startTime = int.Parse(part[0]);
                     var endTime = startTime;
-                    var text = part[1];
+                    var num = int.Parse(part[1]);
+                    var text = part[2];
                     var scale = .35f;
                     var width = 0f;
                     var letterX = 0f;
@@ -59,7 +68,9 @@ namespace StorybrewScripts
                     {
                         if (letter != '_' && letter != ',' && letter != '-' && letter != '/') 
                         {
+                            bool jap = num == 1 ? true : false;
                             var texture = font.GetTexture(letter.ToString());
+                            if (jap) texture = japFont.GetTexture(letter.ToString());
 
                             if (!texture.IsEmpty) 
                             {
