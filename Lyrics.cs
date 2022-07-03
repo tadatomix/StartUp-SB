@@ -77,7 +77,7 @@ namespace StorybrewScripts
                                 var position = new Vector2(320 - width / 2 + letterX, PositionY) + texture.OffsetFor(OsbOrigin.Centre) * scale;
 
                                 var s = GetLayer("").CreateSprite(texture.Path, OsbOrigin.Centre, position);
-                                s.Scale(startTime + inDelay - 100, scale);
+                                s.Scale(startTime + inDelay - FadeTime, scale);
                                 s.MoveY(OsbEasing.OutQuad, startTime + inDelay - 100, startTime + inDelay + 200, position.Y - 6, position.Y);
                                 s.Fade(startTime + inDelay - FadeTime, startTime + inDelay, 0, 1);
                                 s.MoveY(OsbEasing.OutCubic, endTime, endTime + FadeTime, position.Y, position.Y + 4);
