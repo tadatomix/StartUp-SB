@@ -4,11 +4,21 @@ Script: "Particles"
 Config:
   RandomSeed:
     Type: "System.Int32"
-    Value: "0"
+    Value: "1"
     DisplayName: "Random seed"
 Layers:
   f8b9039b02a34d6f9fefb62a1f717b00:
     Name: ""
+    OsbLayer: Background
+    DiffSpecific: No
+    Visible: Yes
+  8a9e23d0a08b463191d79fdf432774cb:
+    Name: "Squares2"
+    OsbLayer: Background
+    DiffSpecific: No
+    Visible: Yes
+  7eead148dc70430fbc0074895c2d55a9:
+    Name: "Squares"
     OsbLayer: Background
     DiffSpecific: No
     Visible: Yes

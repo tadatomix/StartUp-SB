@@ -18,10 +18,10 @@ namespace StorybrewScripts
 
                 Action<int, int> Beam = (startTime, endTime) =>
                 {
-                    var lastPos = new Vector2(240, 320);
-                    var lastDir = 0d;
+                    var lastPos = new Vector2(0, 0);
+                    double lastDir = 0;
                     var scale = 10;
-                    var fade = .6f;
+                    var fade = 0.6;
 
                     foreach (var hitobject in Beatmap.HitObjects)
                     {
@@ -31,13 +31,13 @@ namespace StorybrewScripts
 
                         var sprite = pool.Get(hitobject.StartTime, hitobject.StartTime + 1000);
                         sprite.StartTriggerGroup("HitSound", hitobject.StartTime - 50, hitobject.StartTime + 50);
+                        sprite.Fade(0, 0);
                         sprite.Move(0, hitobject.Position);
                         sprite.Rotate(0, angle);
                         sprite.ScaleVec(OsbEasing.OutQuint, 0, 1000, 1000, scale, 1000, 0);
-                        sprite.Fade(OsbEasing.OutExpo, 0, 1000, fade, .05);
+                        sprite.Fade(OsbEasing.OutExpo, 0, 1000, fade, 0);
                         sprite.EndGroup();
 
-                        fade = Math.Min(.8f, fade + .04f);
                         lastPos = hitobject.Position;
                         lastDir = angle;
                     }
