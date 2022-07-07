@@ -30,10 +30,12 @@ namespace StorybrewScripts
                         var angle = Math.Sqrt(Math.Pow(lastPos.X - hitobject.Position.X, 2) + Math.Pow(lastPos.Y - hitobject.Position.Y, 2)) > 10 ? Random(-.3, .3) + Math.PI / 2 : lastDir - .1;
 
                         var sprite = pool.Get(hitobject.StartTime, hitobject.StartTime + 1000);
-                        sprite.Move(hitobject.StartTime, hitobject.Position);
-                        sprite.Rotate(hitobject.StartTime, angle);
-                        sprite.ScaleVec(OsbEasing.OutQuint, hitobject.StartTime, hitobject.StartTime + 1000, 1000, scale, 1000, 0);
-                        sprite.Fade(OsbEasing.OutExpo, hitobject.StartTime, hitobject.StartTime + 1000, fade, .05);
+                        sprite.StartTriggerGroup("HitSound", hitobject.StartTime, hitobject.StartTime + 20);
+                        sprite.Move(0, hitobject.Position);
+                        sprite.Rotate(0, angle);
+                        sprite.ScaleVec(OsbEasing.OutQuint, 0, 1000, 1000, scale, 1000, 0);
+                        sprite.Fade(OsbEasing.OutExpo, 0, 1000, fade, .05);
+                        sprite.EndGroup();
 
                         fade = Math.Min(.8f, fade + .04f);
                         lastPos = hitobject.Position;
