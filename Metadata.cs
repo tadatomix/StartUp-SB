@@ -61,7 +61,7 @@ namespace StorybrewScripts
         }
         void Spectrum(int StartTime, int EndTime)
         {
-            var MinimalHeight = 0.1f;
+            float MinimalHeight = 0.1f;
             Vector2 Scale = new Vector2(1, 15);
             float LogScale = 5;
             var Position = new Vector2(-80, 354);
@@ -101,12 +101,10 @@ namespace StorybrewScripts
                 keyframes.ForEachPair(
                     (start, end) =>
                     {
-                        bar.ScaleVec(start.Time, end.Time,
-                        Scale.X, start.Value,
-                        Scale.X, end.Value);
+                        bar.ScaleVec(start.Time, end.Time, Scale.X, start.Value, Scale.X, end.Value);
                     },
                     MinimalHeight,
-                    s => s
+                    s => (float)Math.Round(s, 1)
                 );
             }
         }
@@ -122,7 +120,6 @@ namespace StorybrewScripts
 
             var offsetX = 0f;
             var delay = 0;
-            var width = 0f;
 
             foreach (var letter in text)
             {
@@ -138,7 +135,6 @@ namespace StorybrewScripts
                     sprite.Scale(startTime + delay, scale);
                 }
                 offsetX += texture.BaseWidth * scale;
-                width += texture.BaseWidth * scale;
 
                 delay += 20;
             }
