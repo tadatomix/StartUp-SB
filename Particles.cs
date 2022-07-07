@@ -54,30 +54,56 @@ namespace StorybrewScripts
                 RadialParticles(237350, 302069);
                 RisingParticles(237350, 302069);
             }
-            using (var pool = new OsbSpritePools(GetLayer("Squares")))
+            using (var pool = new OsbSpritePool(GetLayer("Squares"), "sb/p.png", OsbOrigin.Centre, false))
             {
                 pool.MaxPoolDuration = 300000;
 
-                Action<int, int, double> SquareParticles = (startTime, endTime, maxFade) =>
+                Action<int, int, float> SquareParticles = (startTime, endTime, maxFade) =>
                 {
-                    for (int i = startTime; i < endTime; i += 40)
+                    for (int i = startTime; i < endTime - 2000; i += 40)
                     {
-                        var duration = Random(2000, 6000);
+                        var duration = Random(1500, 5000);
                         var fade = Random(0.5f, maxFade);
-                        var pos = new Vector2(Random(-127, 320), 240);
+                        var pos = new Vector2(Random(-157, 347), 240);
                         var endPos = new Vector2(Random(320, 767), Random(100, 380));
 
-                        var sprite = pool.Get(i, i + duration, "sb/p.png", OsbOrigin.Centre, false);
-                        sprite.Fade(i, i + 200, 0, fade);
-                        sprite.Move(i, i + duration, pos, endPos);
-                        sprite.Scale(i, Random(2.0f, 8));
-                        sprite.Fade(i + duration - 200, i + duration, fade, 0);
-                        sprite.Rotate(i, i + duration / 2, Random(-Math.PI / 4, Math.PI / 4), Random(-Math.PI / 4, Math.PI / 4));
+                        var sprite = pool.Get(i, i + duration);
+                        sprite.Fade(i, i + 150, 0, fade);
+                        sprite.Move((OsbEasing)Random(2), i, i + duration, pos, endPos);
+                        sprite.Scale(i, Random(2, 10));
+                        sprite.Fade(i + duration - 150, i + duration, fade, 0);
+                        sprite.Rotate((OsbEasing)Random(2), i, i + duration, Random(-Math.PI / 4, Math.PI / 4), Random(-Math.PI / 4, Math.PI / 4));
                     }
                 };
                 
                 SquareParticles(91732, 102518, 1);
-                SquareParticles(199597, 210384, 0.75);
+                SquareParticles(199597, 210384, 0.7f);
+            }
+            using (var pool = new OsbSpritePool(GetLayer("Squares2"), "sb/p.png", OsbOrigin.Centre, false))
+            {
+                Action<int, int, float, bool> ExpandingSquareParticles = (startTime, endTime, maxFade, right) => 
+                {
+                    for (int i = startTime; i < endTime - 2000; i += 40)
+                    {
+                        var duration = Random(1000, 4000);
+                        var fade = Random(0.5f, maxFade);
+                        var pos = new Vector2(right ? 767 : -127, Random(-100, 600));
+                        var endPos = new Vector2(320, 240);
+
+                        var sprite = pool.Get(i, i + duration);
+                        sprite.Fade(i, i + 150, 0, fade);
+                        sprite.Move((OsbEasing)Random(2), i, i + duration, pos, endPos);
+                        sprite.Scale(i, Random(2, 10));
+                        sprite.Fade(i + duration - 150, i + duration, fade, 0);
+                        sprite.Rotate((OsbEasing)Random(2), i, i + duration, Random(-Math.PI / 4, Math.PI / 4), Random(-Math.PI / 4, Math.PI / 4));
+                    }
+                };
+
+                ExpandingSquareParticles(113305, 155103, 0.8f, true);
+                ExpandingSquareParticles(113305, 155103, 0.8f, false);
+
+                ExpandingSquareParticles(258923, 300721, 0.8f, true);
+                ExpandingSquareParticles(258923, 300721, 0.8f, false);
             }
         }
     }
