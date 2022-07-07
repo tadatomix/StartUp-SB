@@ -11,14 +11,23 @@ namespace StorybrewScripts
     {
         public override void Generate()
         {
+            #region Background
+
+            Action<int, int, int> ColorBackground = (startTime, endTime, endFade) =>
+            {
+                var sprite0 = GetLayer("Delete").CreateSprite("st up.jpg");
+                sprite0.Fade(0, 0);
+
+                var pixel = GetLayer("").CreateSprite("sb/p.png");
+                pixel.Color(startTime, new Color4(1, 176, 193, 1));
+                pixel.ScaleVec(startTime, 854, 480);
+                pixel.Fade(startTime, 1);
+                pixel.Fade(endTime, endFade, 1, 0);
+            };
+
 		    ColorBackground(-50, 312855, 329035);
 
-            FloatingGirl(10833, 43193, 2500, 2500);
-            BlurGirl(43193, 91732);
-            FloatingGirl(102518, 111957, 8000, 1000);
-            FloatingGirl(113305, 199597, 0, 5000, true);
-            BlurGirl(199597, 221170);
-            FloatingGirl(221170, 302069, 2500, 10000, true);
+            #endregion
 
             var beat = Beatmap.GetTimingPointAt(46).BeatDuration;
 
@@ -150,6 +159,8 @@ namespace StorybrewScripts
 
             #endregion
 
+            #region SideLight
+
             var leftLight = GetLayer("Sides").CreateSprite("sb/side.png", OsbOrigin.CentreLeft, new Vector2(-107, 240));
             var rightLight = GetLayer("Sides").CreateSprite("sb/side.png", OsbOrigin.CentreRight, new Vector2(747, 240));
 
@@ -179,49 +190,59 @@ namespace StorybrewScripts
             SideFlashes(156451, 188811, 0.4);
             SideFlashes(237350, 257827, 0.6);
             SideFlashes(258923, 302069, 0.7);
-        }
-        void ColorBackground(int startTime, int endTime, int endFade)
-        {
-            var sprite0 = GetLayer("Delete").CreateSprite("st up.jpg");
-            sprite0.Fade(0, 0);
 
-            var sprite = GetLayer("").CreateSprite("sb/p.png");
-            sprite.Color(startTime, new Color4(1, 176, 193, 1));
-            sprite.ScaleVec(startTime, 854, 480);
-            sprite.Fade(startTime, 1);
-            sprite.Fade(endTime, endFade, 1, 0);
-        }
-        void FloatingGirl(int startTime, int endTime, int fadeIn, int fadeOut, bool kiaiTime = false)
-        {
+            #endregion
+
+            #region Girl
+
             var sprite = GetLayer("Girl").CreateSprite("sb/girl.png");
-            sprite.Fade(startTime, startTime + fadeIn, 0, 1);
-            sprite.Scale(startTime, 0.12);
-            sprite.Fade(OsbEasing.InOutSine, endTime, endTime + fadeOut, 1, 0);
+            sprite.Scale(10833, 0.12);
 
-            if (kiaiTime)
+            var blur = GetLayer("Girl").CreateSprite("sb/blurgirl.png");
+            blur.Scale(43193, 0.12);
+
+            Action<int, int, int, int, bool> FloatingGirl = (start, end, fadeIn, fadeOut, kiaiTime) =>
             {
-                var pos1 = new Vector2(320, 240);
-                var pos2 = new Vector2(Random(310, 330), Random(230, 250));
-                var pos3 = new Vector2(Random(310, 330), Random(230, 250));
-                var pos4 = new Vector2(Random(310, 330), Random(230, 250));
-                var rad1 = 0;
-                var rad2 = MathHelper.DegreesToRadians(Random(5));
+                sprite.Fade(start, start + fadeIn, 0, 1);
+                sprite.Fade(OsbEasing.InOutSine, end, end + fadeOut, 1, 0);
 
-                sprite.StartLoopGroup(startTime, (endTime + fadeOut - startTime) / 7500 + 1);
-                sprite.Move(OsbEasing.InOutSine, 0, 1875, pos1, pos2);
-                sprite.Move(OsbEasing.InOutSine, 1875, 3750, pos2, pos3);
-                sprite.Move(OsbEasing.InOutSine, 3750, 5625, pos3, pos4);
-                sprite.Move(OsbEasing.InOutSine, 5625, 7500, pos4, pos1);
-                sprite.Rotate(OsbEasing.InOutSine, 0, 3750, rad1, rad2);
-                sprite.Rotate(OsbEasing.InOutSine, 3750, 7500, rad2, rad1);
-            }
-        }
-        void BlurGirl(int startTime, int endTime)
-        {
-            var sprite = GetLayer("Girl").CreateSprite("sb/blurgirl.png");
-            sprite.Fade(startTime, startTime + 2500, 0, 1);
-            sprite.Scale(startTime, 0.12);
-            sprite.Fade(OsbEasing.InOutSine, endTime, endTime + 2500, 1, 0);
+                if (kiaiTime)
+                {
+                    var pos1 = new Vector2(320, 240);
+                    var pos2 = new Vector2(Random(310, 330), Random(230, 250));
+                    var pos3 = new Vector2(Random(310, 330), Random(230, 250));
+                    var pos4 = new Vector2(Random(310, 330), Random(230, 250));
+                    var rad1 = 0;
+                    var rad2 = MathHelper.DegreesToRadians(Random(-2.5f, 2.5f));
+                    var rad3 = MathHelper.DegreesToRadians(Random(-2.5f, 2.5f));
+
+                    sprite.StartLoopGroup(start, (end + fadeOut - start) / 7500 + 1);
+                    sprite.Move(OsbEasing.InOutSine, 0, 1875, pos1, pos2);
+                    sprite.Move(OsbEasing.InOutSine, 1875, 3750, pos2, pos3);
+                    sprite.Move(OsbEasing.InOutSine, 3750, 5625, pos3, pos4);
+                    sprite.Move(OsbEasing.InOutSine, 5625, 7500, pos4, pos1);
+                    sprite.Rotate(OsbEasing.InOutSine, 0, 2500, rad1, rad2);
+                    sprite.Rotate(OsbEasing.InOutSine, 2500, 5000, rad2, rad3);
+                    sprite.Rotate(OsbEasing.InOutSine, 5000, 7500, rad3, rad1);
+                    sprite.EndGroup();
+                }
+            };
+
+            Action<int, int> BlurGirl = (start, end) =>
+            {
+                blur.Fade(start, start + 2500, 0, 1);
+                blur.Fade(OsbEasing.InOutSine, end, end + 2500, 1, 0);
+            };
+
+            FloatingGirl(10833, 43193, 2500, 2500, false);
+            FloatingGirl(102518, 111957, 8000, 1000, false);
+            FloatingGirl(113305, 199597, 0, 5000, true);
+            FloatingGirl(221170, 302069, 2500, 10000, true);
+
+            BlurGirl(43193, 91732);
+            BlurGirl(199597, 221170);
+
+            #endregion
         }
     }
 }

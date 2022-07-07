@@ -16,10 +16,19 @@ namespace StorybrewScripts
         }
         void Box(int startTime, int endTime)
         {
+            #region Metadata
+
             var box = GetLayer("").CreateSprite("sb/box.png", OsbOrigin.BottomLeft, new Vector2(-85, 460));
             box.Fade(startTime, 0.8);
             box.ScaleVec(OsbEasing.OutElasticHalf, startTime, startTime + 1000, 0, 0.4, 0.4, 0.4);
             box.ScaleVec(OsbEasing.OutQuad, endTime, endTime + 1000, 0.4, 0.4, 0, 0.4);
+
+            GenerateText(startTime, endTime, new Vector2(-28, 367), 0.6f, "Heavy", "PSYQUI ft. Such");
+            GenerateText(startTime, endTime, new Vector2(166, 415), 0.4f, "Thin", "Start Up");
+
+            #endregion
+
+            #region Progress
 
             var bar = GetLayer("Bar").CreateSprite("sb/p.png", OsbOrigin.BottomCentre, new Vector2(710, 205));
             bar.ScaleVec(startTime, 40, 190);
@@ -46,8 +55,7 @@ namespace StorybrewScripts
             ProgressBar(258923, 302069);
             ProgressBar(302069, endTime);
 
-            GenerateText(startTime, endTime, new Vector2(-28, 367), 0.6f, "Heavy", "PSYQUI ft. Such");
-            GenerateText(startTime, endTime, new Vector2(166, 415), 0.4f, "Thin", "Start Up");
+            #endregion
 
             Spectrum(startTime, endTime);
         }
