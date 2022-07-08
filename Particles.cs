@@ -76,8 +76,11 @@ namespace StorybrewScripts
                     }
                 };
                 
+                SquareParticles(10833, 43193, 0.7f);
                 SquareParticles(91732, 102518, 1);
+                SquareParticles(188811, 198249, 0.7f);
                 SquareParticles(199597, 210384, 0.7f);
+                SquareParticles(231957, 236002, 0.7f);
             }
             using (var pool = new OsbSpritePool(GetLayer("Squares2"), "sb/p.png", OsbOrigin.Centre, false))
             {
