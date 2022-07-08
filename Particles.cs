@@ -83,13 +83,28 @@ namespace StorybrewScripts
             {
                 pool.MaxPoolDuration = 300000;
 
-                Action<int, int, float, bool> ExpandingSquareParticles = (startTime, endTime, maxFade, right) => 
+                Action<int, int> ExpandingSquareParticles = (startTime, endTime) => 
                 {
                     for (int i = startTime; i < endTime - 1000; i += 35)
                     {
                         var duration = Random(1000, 4000);
-                        var fade = Random(0.5f, maxFade);
-                        var pos = new Vector2(right ? 767 : -127, Random(-100, 600));
+                        var fade = Random(0.5f, 0.8f);
+                        var pos = new Vector2(757, Random(-100, 600));
+                        var endPos = new Vector2(320, 240);
+
+                        var sprite = pool.Get(i, i + duration);
+                        sprite.Fade(i, i + 150, 0, fade);
+                        sprite.Move(i, i + duration, pos, endPos);
+                        sprite.Scale(i, Math.Round(Random(2.5, 10), 1));
+                        sprite.Fade(i + duration - 150, i + duration, fade, 0);
+                        sprite.Rotate(i, i + duration, Random(Math.PI), Random(Math.PI * 2));
+                    }
+
+                    for (int i = startTime; i < endTime - 1000; i += 35)
+                    {
+                        var duration = Random(1000, 4000);
+                        var fade = Random(0.5f, 0.8f);
+                        var pos = new Vector2(-117, Random(-100, 600));
                         var endPos = new Vector2(320, 240);
 
                         var sprite = pool.Get(i, i + duration);
@@ -101,11 +116,8 @@ namespace StorybrewScripts
                     }
                 };
 
-                ExpandingSquareParticles(113305, 155103, 0.8f, true);
-                ExpandingSquareParticles(113305, 155103, 0.8f, false);
-
-                ExpandingSquareParticles(258923, 300721, 0.8f, true);
-                ExpandingSquareParticles(258923, 300721, 0.8f, false);
+                ExpandingSquareParticles(113305, 155103);
+                ExpandingSquareParticles(258923, 300721);
             }
         }
     }

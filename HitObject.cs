@@ -32,8 +32,8 @@ namespace StorybrewScripts
 
                         var sprite = pool.Get(hitobject.StartTime, hitobject.StartTime + 1000);
                         sprite.StartTriggerGroup("HitSound", hitobject.StartTime - 35, hitobject.StartTime + 35);
-                        sprite.Move(0, hitobject.Position);
                         sprite.Fade(0, 0);
+                        sprite.Move(0, hitobject.Position);
                         sprite.Rotate(0, angle);
                         sprite.ScaleVec(OsbEasing.OutQuint, 0, 1000, 1000, scale, 1000, 0);
                         sprite.Fade(OsbEasing.OutExpo, 0, 1000, fade, 0.35);
