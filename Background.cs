@@ -25,7 +25,7 @@ namespace StorybrewScripts
                 pixel.Fade(endTime, endFade, 1, 0);
             };
 
-		    ColorBackground(-50, 312855, 329035);
+            ColorBackground(0, 312855, 329035);
 
             #endregion
 

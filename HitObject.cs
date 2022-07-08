@@ -31,8 +31,8 @@ namespace StorybrewScripts
                         Math.Pow(lastPos.Y - hitobject.Position.Y, 2)) > 10 ? Random(-0.3, 0.3) + Math.PI / 2 : lastDir - 0.1;
 
                         var sprite = pool.Get(hitobject.StartTime, hitobject.StartTime + 1000);
+                        sprite.Fade(102518, 0);
                         sprite.StartTriggerGroup("HitSound", hitobject.StartTime - 35, hitobject.StartTime + 35);
-                        sprite.Fade(-1, 0);
                         sprite.Move(0, hitobject.Position);
                         sprite.Rotate(0, angle);
                         sprite.ScaleVec(OsbEasing.OutQuint, 0, 1000, 1000, scale, 1000, 0);
