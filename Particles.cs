@@ -69,10 +69,10 @@ namespace StorybrewScripts
 
                         var sprite = pool.Get(i, i + duration);
                         sprite.Fade(i, i + 150, 0, fade);
-                        sprite.Move((OsbEasing)Random(2), i, i + duration, pos, endPos);
-                        sprite.Scale(i, Random(2, 10));
+                        sprite.Move(i, i + duration, pos, endPos);
+                        sprite.Scale(i, Random(2.5f, 10));
                         sprite.Fade(i + duration - 150, i + duration, fade, 0);
-                        sprite.Rotate((OsbEasing)Random(2), i, i + duration, Random(-Math.PI / 4, Math.PI / 4), Random(-Math.PI / 4, Math.PI / 4));
+                        sprite.Rotate(i, i + duration, Random(Math.PI), Random(Math.PI * 2));
                     }
                 };
                 
@@ -81,9 +81,11 @@ namespace StorybrewScripts
             }
             using (var pool = new OsbSpritePool(GetLayer("Squares2"), "sb/p.png", OsbOrigin.Centre, false))
             {
+                pool.MaxPoolDuration = 300000;
+
                 Action<int, int, float, bool> ExpandingSquareParticles = (startTime, endTime, maxFade, right) => 
                 {
-                    for (int i = startTime; i < endTime - 2000; i += 40)
+                    for (int i = startTime; i < endTime - 1000; i += 35)
                     {
                         var duration = Random(1000, 4000);
                         var fade = Random(0.5f, maxFade);
@@ -92,10 +94,10 @@ namespace StorybrewScripts
 
                         var sprite = pool.Get(i, i + duration);
                         sprite.Fade(i, i + 150, 0, fade);
-                        sprite.Move((OsbEasing)Random(2), i, i + duration, pos, endPos);
-                        sprite.Scale(i, Random(2, 10));
+                        sprite.Move(i, i + duration, pos, endPos);
+                        sprite.Scale(i, Math.Round(Random(2.5, 10), 1));
                         sprite.Fade(i + duration - 150, i + duration, fade, 0);
-                        sprite.Rotate((OsbEasing)Random(2), i, i + duration, Random(-Math.PI / 4, Math.PI / 4), Random(-Math.PI / 4, Math.PI / 4));
+                        sprite.Rotate(i, i + duration, Random(Math.PI), Random(Math.PI * 2));
                     }
                 };
 

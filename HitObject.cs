@@ -27,15 +27,16 @@ namespace StorybrewScripts
                     {
                         if (hitobject.StartTime < startTime - 5 | endTime - 5 <= hitobject.StartTime) continue;
 
-                        var angle = Math.Sqrt(Math.Pow(lastPos.X - hitobject.Position.X, 2) + Math.Pow(lastPos.Y - hitobject.Position.Y, 2)) > 10 ? Random(-.3, .3) + Math.PI / 2 : lastDir - .1;
+                        var angle = Math.Sqrt(Math.Pow(lastPos.X - hitobject.Position.X, 2) + 
+                        Math.Pow(lastPos.Y - hitobject.Position.Y, 2)) > 10 ? Random(-0.3, 0.3) + Math.PI / 2 : lastDir - 0.1;
 
                         var sprite = pool.Get(hitobject.StartTime, hitobject.StartTime + 1000);
                         sprite.StartTriggerGroup("HitSound", hitobject.StartTime - 35, hitobject.StartTime + 35);
-                        sprite.Fade(0, 0);
                         sprite.Move(0, hitobject.Position);
+                        sprite.Fade(0, 0);
                         sprite.Rotate(0, angle);
                         sprite.ScaleVec(OsbEasing.OutQuint, 0, 1000, 1000, scale, 1000, 0);
-                        sprite.Fade(OsbEasing.OutExpo, 0, 1000, fade, 0);
+                        sprite.Fade(OsbEasing.OutExpo, 0, 1000, fade, 0.35);
                         sprite.EndGroup();
 
                         lastPos = hitobject.Position;
@@ -46,6 +47,7 @@ namespace StorybrewScripts
                 Beam(102518, 111872);
                 Beam(134878, 155103);
                 Beam(188811, 199513);
+                Beam(226563, 232125);
                 Beam(258923, 301816);
             }
         }
