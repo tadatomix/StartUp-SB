@@ -20,7 +20,7 @@ namespace StorybrewScripts
                 {
                     var lastPos = new Vector2(0, 0);
                     double lastDir = 0;
-                    var scale = 10;
+                    var scale = 8;
                     var fade = 0.6;
 
                     foreach (var hitobject in Beatmap.HitObjects)
@@ -28,16 +28,13 @@ namespace StorybrewScripts
                         if (hitobject.StartTime < startTime - 5 | endTime - 5 <= hitobject.StartTime) continue;
 
                         var angle = Math.Sqrt(Math.Pow(lastPos.X - hitobject.Position.X, 2) + 
-                        Math.Pow(lastPos.Y - hitobject.Position.Y, 2)) > 10 ? Random(-0.3, 0.3) + Math.PI / 2 : lastDir - 0.1;
+                        Math.Pow(lastPos.Y - hitobject.Position.Y, 2)) > 10 ? Random(-0.1, 0.1) + Math.PI / 2 : lastDir - 0.1;
 
                         var sprite = pool.Get(hitobject.StartTime, hitobject.StartTime + 1000);
-                        sprite.Fade(102518, 0);
-                        sprite.StartTriggerGroup("HitSound", hitobject.StartTime - 35, hitobject.StartTime + 35);
-                        sprite.Move(0, hitobject.Position);
-                        sprite.Rotate(0, angle);
-                        sprite.ScaleVec(OsbEasing.OutQuint, 0, 1000, 1000, scale, 1000, 0);
-                        sprite.Fade(OsbEasing.OutExpo, 0, 1000, fade, 0.35);
-                        sprite.EndGroup();
+                        sprite.Move(hitobject.StartTime, hitobject.Position);
+                        sprite.Rotate(hitobject.StartTime, Math.Round(angle, 2));
+                        sprite.ScaleVec(OsbEasing.OutQuint, hitobject.StartTime, hitobject.StartTime + 1000, 1000, scale, 1000, 0);
+                        sprite.Fade(OsbEasing.OutExpo, hitobject.StartTime, hitobject.StartTime + 1000, fade, 0.3);
 
                         lastPos = hitobject.Position;
                         lastDir = angle;
