@@ -96,22 +96,23 @@ namespace StorybrewScripts
                         var pos = new Vector2(750, Random(-100, 580));
                         var endPos = new Vector2(320, 240);
                         var rad = Math.Round(Random(-Math.PI * 2, Math.PI * 2), 2);
-                        var endRad = Math.Round(Random(Math.PI * 2), 2);
+                        var endRad = Math.Round(Random(-Math.PI * 2, Math.PI * 2), 2);
 
                         var sprite = pool.Get(i, i + duration);
                         sprite.Fade(i, i + 150, 0, fade);
                         sprite.Move(i, i + duration, pos, endPos);
-                        sprite.Scale(i, Math.Round(Random(2.5, 10), 1));
+                        sprite.Scale(i, Math.Round(Random(2.5, 10), 2));
                         sprite.Rotate(i, i + duration, rad, endRad);
+                        sprite.Fade(i + duration, 0);
 
                         var pos2 = new Vector2(-110, Random(-100, 580));
-                        var endPos2 = new Vector2(320, 240);
 
                         var sprite2 = pool.Get(i, i + duration);
                         sprite2.Fade(i, i + 150, 0, fade);
-                        sprite2.Move(i, i + duration, pos2, endPos2);
-                        sprite2.Scale(i, Math.Round(Random(2.5, 10), 1));
+                        sprite2.Move(i, i + duration, pos2, endPos);
+                        sprite2.Scale(i, Math.Round(Random(2.5, 10), 2));
                         sprite2.Rotate(i, i + duration, rad, endRad);
+                        sprite2.Fade(i + duration, 0);
                     }
                 };
 
