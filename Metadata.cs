@@ -23,8 +23,8 @@ namespace StorybrewScripts
             box.ScaleVec(OsbEasing.OutElasticHalf, startTime, startTime + 1000, 0, 0.4, 0.4, 0.4);
             box.ScaleVec(OsbEasing.OutQuad, endTime, endTime + 1000, 0.4, 0.4, 0, 0.4);
 
-            GenerateText(startTime, endTime, new Vector2(-28, 367), 0.6f, "Heavy", "PSYQUI ft. Such");
-            GenerateText(startTime, endTime, new Vector2(166, 415), 0.4f, "Thin", "Start Up");
+            GenerateText(startTime, endTime, new Vector2(-28, 367), 0.6f, "Heavy", "PSYQUI FT. SUCH");
+            GenerateText(startTime, endTime, new Vector2(166, 415), 0.4f, "Thin", "START UP");
 
             #endregion
 
