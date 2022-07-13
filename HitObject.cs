@@ -12,7 +12,11 @@ namespace StorybrewScripts
     {
         public override void Generate()
         {
-            using (var pool = new OsbSpritePool(GetLayer(""), "sb/p.png", OsbOrigin.Centre, true))
+            using (var pool = new OsbSpritePool(GetLayer(""), "sb/p.png", OsbOrigin.Centre, (sprite, startTime, endTime) => 
+            {
+                sprite.Additive(0);
+                sprite.Fade(0, 0);
+            }))
             {
                 pool.MaxPoolDuration = 300000;
 
@@ -31,10 +35,12 @@ namespace StorybrewScripts
                         Math.Pow(lastPos.Y - hitobject.Position.Y, 2)) > 10 ? Random(-0.1, 0.1) + Math.PI / 2 : lastDir - 0.1;
 
                         var sprite = pool.Get(hitobject.StartTime, hitobject.StartTime + 1000);
-                        sprite.Move(hitobject.StartTime, hitobject.Position);
-                        sprite.Rotate(hitobject.StartTime, Math.Round(angle, 2));
-                        sprite.ScaleVec(OsbEasing.OutQuint, hitobject.StartTime, hitobject.StartTime + 1000, 1000, scale, 1000, 0);
-                        sprite.Fade(OsbEasing.OutExpo, hitobject.StartTime, hitobject.StartTime + 1000, fade, 0.3);
+                        sprite.StartTriggerGroup("HitSound", hitobject.StartTime - 35, hitobject.StartTime + 35);
+                        sprite.Move(0, hitobject.Position);
+                        sprite.Rotate(0, Math.Round(angle, 2));
+                        sprite.ScaleVec(OsbEasing.OutQuint, 0, 1000, 1000, scale, 1000, 0);
+                        sprite.Fade(OsbEasing.OutExpo, 0, 1000, fade, 0.3);
+                        sprite.EndGroup();
 
                         lastPos = hitobject.Position;
                         lastDir = angle;
