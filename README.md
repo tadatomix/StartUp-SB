@@ -1,6 +1,6 @@
 # StartUp-SB
 
-Storyboard this map [map:](https://osu.ppy.sh/b/3758152) made by [me](https://osu.ppy.sh/users/18012118) and [Nolife99](https://osu.ppy.sh/users/21286857)
+Storyboard this [map](https://osu.ppy.sh/b/3758152) made by [me](https://osu.ppy.sh/users/18012118) and [Nolife99](https://osu.ppy.sh/users/21286857)
 
 requires [storybrew](https://github.com/Damnae/storybrew) to run
 
