@@ -13,7 +13,7 @@ What Nolife did:
 
 What I did:
 - made a fork of his SB
-- Added some 3D parts (stars at the beginning & circles before the drop)
+- Added some 3D parts (stars at the beginning & circles before last drop)
 - Rewrote lyrics script (based on Damnae's karaoke script)
 - Copied Kiai from Nolife's SB
 - Added a timer
