@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="Anim.cs" />
     <Compile Include="Karaoke.cs" />
+    <Compile Include="Particles.cs" />
   </ItemGroup>
   <ItemGroup />
 </Project>
