@@ -12,8 +12,8 @@ What Nolife did:
 - used a input lyrics file for instant update and for timing reasons
 
 What I did:
-- make a fork of his SB
+- made a fork of his SB
 - Added some 3D parts (stars at the beginning & circles before the drop)
-- Rewrite lyrics script (based on Damnae's karaoke script)
+- Rewrote lyrics script (based on Damnae's karaoke script)
 - Copied Kiai from Nolife's SB
 - Added a timer
