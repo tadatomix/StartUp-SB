@@ -15,3 +15,5 @@ What I did:
 - make a fork of his SB
 - Added some 3D parts (stars at the beginning & circles before the drop)
 - Rewrite lyrics script (based on Damnae's karaoke script)
+- Copied Kiai from Nolife's SB
+- Added a timer
